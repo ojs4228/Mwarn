@@ -1,0 +1,11 @@
+name: Mwarn
+version: '${project.version}'
+main: net.kormons.warn.monswarn.MonsWarn
+api-version: 1.18
+authors: [ kormons ]
+description: warn plugin
+commands:
+  경고지급:
+  경고확인:
+  경고삭제:
+  경고리로드:
