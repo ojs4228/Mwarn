@@ -1,5 +1,5 @@
 name: Mwarn
-version: '${project.version}'
+version: 2.0.0
 main: net.kormons.warn.monswarn.MonsWarn
 api-version: 1.18
 authors: [ kormons ]
@@ -9,3 +9,4 @@ commands:
   경고확인:
   경고삭제:
   경고리로드:
+  경고셋업:

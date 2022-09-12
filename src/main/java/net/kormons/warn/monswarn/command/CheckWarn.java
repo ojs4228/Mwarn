@@ -13,20 +13,16 @@ public class CheckWarn implements CommandExecutor {
     public String prefix;
 
     @Override
-    public boolean onCommand(CommandSender sender,Command command,String label,String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (label.equalsIgnoreCase("경고확인")) {
 
             prefix = "§e§l[§f§lMwarn§e§l]§f";
 
-            Player player = (Player)sender;
+            Player player = (Player) sender;
 
+            int num = MonsWarn.checkWarn(player);
 
-
-            instance = MonsWarn.getInstance();
-            int num = instance.getConfig().getInt("경고." + player.getName() + ".경고수");
-
-            instance.reloadConfig();
             player.sendMessage(prefix + "당신의 경고수는" + num + "입니다.");
         }
 

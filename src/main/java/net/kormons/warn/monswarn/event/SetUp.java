@@ -14,14 +14,13 @@ public class SetUp implements Listener {
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
 
+        instance = MonsWarn.getInstance();
         OfflinePlayer joinPlayer = event.getPlayer();
 
         if (!joinPlayer.hasPlayedBefore()) {
 
-            instance = MonsWarn.getInstance();
-            instance.getConfig().set("경고." + joinPlayer.getName() + ".경고수", 0);
+            MonsWarn.setUpWarn(event.getPlayer());
 
-            instance.saveConfig();
         }
 
     }

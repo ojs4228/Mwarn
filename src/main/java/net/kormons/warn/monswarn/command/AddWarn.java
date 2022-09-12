@@ -7,11 +7,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class AddWarn implements CommandExecutor {
     private static MonsWarn instance;
     public String prefix;
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,40 +41,46 @@ public class AddWarn implements CommandExecutor {
                             return true;
                         }
                     } else if (args.length == 3) {
+
+
                         play = Bukkit.getOfflinePlayer(args[1]);
                         int num = Integer.parseInt(args[0]);
                         String reason = args[2];
-
                         instance = MonsWarn.getInstance();
-                        int count = instance.getConfig().getInt("경고." + play.getName() + ".경고수");
-                        int i = count + num;
-                        instance.getConfig().set("경고." + play.getName() + ".경고수", i);
+                        int warn = MonsWarn.addWarn(player, play, num, reason);
 
-                        player.sendMessage(play.getName() + "님에게 경고" + num + "만큼을 주었습니다.");
+                        if (warn == 0) {
 
+                            player.sendMessage(play.getName() + "님에게 경고" + num + "만큼을 주었습니다.");
 
-                        Bukkit.broadcastMessage("     ");
-                        Bukkit.broadcastMessage("------경고 안내------");
-                        Bukkit.broadcastMessage(prefix + play.getName() + "님에게 " + num + " 만큼의 경고를 지급 했습니다");
-                        Bukkit.broadcastMessage(prefix + "사유: " + reason);
-                        Bukkit.broadcastMessage(prefix + "처리자:" + player.getName());
-                        Bukkit.broadcastMessage("-------------------");
-                        Bukkit.broadcastMessage("     ");
-
-                        instance.saveConfig();
-
-                        if (count == 5 || count > 5) {
-                            Player player1 = (Player) play;
                             Bukkit.broadcastMessage("     ");
-                            Bukkit.broadcastMessage(prefix + "누적 경고가 5가 넘어 서버에서 차단 당했습니다.");
+                            Bukkit.broadcastMessage("------경고 안내------");
+                            Bukkit.broadcastMessage(prefix + play.getName() + "님에게 " + num + " 만큼의 경고를 지급 했습니다");
+                            Bukkit.broadcastMessage(prefix + "사유: " + reason);
+                            Bukkit.broadcastMessage(prefix + "처리자:" + player.getName());
+                            Bukkit.broadcastMessage("-------------------");
                             Bukkit.broadcastMessage("     ");
-                            player1.banPlayerIP("누적경고 5회 이상");
+
+                        } else if (warn == 1) {
+
+                            player.sendMessage(play.getName() + "님에게 경고" + num + "만큼을 주었습니다.");
+
+                            Bukkit.broadcastMessage("     ");
+                            Bukkit.broadcastMessage("------경고 안내------");
+                            Bukkit.broadcastMessage(prefix + play.getName() + "님에게 " + num + " 만큼의 경고를 지급 했습니다");
+                            Bukkit.broadcastMessage(prefix + "사유: " + reason);
+                            Bukkit.broadcastMessage(prefix + "처리자:" + player.getName());
+                            Bukkit.broadcastMessage(prefix + "누적경고 5회로 인하여, 밴 처리 되었습니다.");
+                            Bukkit.broadcastMessage("-------------------");
+                            Bukkit.broadcastMessage("     ");
+
                         }
                     }
                 }
             } else {
 
                 player.sendMessage(prefix + "당신은 이 명령어를 사용할 권한이 없습니다.");
+                return true;
             }
         }
 
@@ -82,3 +88,5 @@ public class AddWarn implements CommandExecutor {
         return true;
     }
 }
+
+
